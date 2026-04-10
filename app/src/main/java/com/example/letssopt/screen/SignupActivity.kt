@@ -140,7 +140,7 @@ fun Signup(modifier: Modifier = Modifier) {
                     !isEmailValid -> {
                         Toast.makeText(
                             context,
-                            stringResource(R.string.signup_email_toast),
+                            context.getString(R.string.signup_email_toast),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -148,7 +148,7 @@ fun Signup(modifier: Modifier = Modifier) {
                     !isPasswordValid -> {
                         Toast.makeText(
                             context,
-                            stringResource(R.string.signup_password_toast),
+                            context.getString(R.string.signup_password_toast),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -156,7 +156,7 @@ fun Signup(modifier: Modifier = Modifier) {
                     !isPasswordConfirmed -> {
                         Toast.makeText(
                             context,
-                            stringResource(R.string.signup_password_confirmed_toast),
+                            context.getString(R.string.signup_password_confirmed_toast),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
