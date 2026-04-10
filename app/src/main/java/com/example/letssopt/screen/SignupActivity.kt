@@ -1,6 +1,11 @@
 package com.example.letssopt.screen
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,6 +56,8 @@ class SignupActivity : ComponentActivity() {
 
 @Composable
 fun Signup(modifier: Modifier = Modifier) {
+    val context = LocalContext.current as Activity
+
     var email by remember {
         mutableStateOf("")
     }
@@ -59,6 +67,15 @@ fun Signup(modifier: Modifier = Modifier) {
     var passwordConfirm by remember {
         mutableStateOf("")
     }
+
+    // 모든 정보가 입력되었는지
+    val isAllInputFilled =
+        email.isNotEmpty() && password.isNotEmpty() && passwordConfirm.isNotEmpty()
+
+    // 회원가입 성공 조건
+    val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    val isPasswordValid = password.length in 8..12
+    val isPasswordConfirmed = password == passwordConfirm
 
     Column(
         modifier = modifier
@@ -118,8 +135,44 @@ fun Signup(modifier: Modifier = Modifier) {
         // bottom
         PrimaryButton(
             text = stringResource(R.string.signup),
-            onClick = {},
-            enabled = email.isNotEmpty() && password.isNotEmpty() && passwordConfirm.isNotEmpty()
+            onClick = {
+                when {
+                    !isEmailValid -> {
+                        Toast.makeText(
+                            context,
+                            stringResource(R.string.signup_email_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    !isPasswordValid -> {
+                        Toast.makeText(
+                            context,
+                            stringResource(R.string.signup_password_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    !isPasswordConfirmed -> {
+                        Toast.makeText(
+                            context,
+                            stringResource(R.string.signup_password_confirmed_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    else -> {
+                        // 조건을 만족할 때 데이터 전달
+                        val intent = Intent().apply {
+                            putExtra("email", email)
+                            putExtra("password", password)
+                        }
+                        context.setResult(RESULT_OK, intent)
+                        context.finish()
+                    }
+                }
+            },
+            enabled = isAllInputFilled
         )
     }
 }

@@ -25,7 +25,7 @@ import com.example.letssopt.designsystem.theme.TextPrimary
 @Composable
 fun PrimaryButton(
     text: String,
-    onClick: () -> Unit,
+    onClick: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {

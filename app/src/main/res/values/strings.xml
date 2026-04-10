@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">LETSSOPT</string>
     <string name="title_activity_login">LoginActivity</string>
-    <!-- watcha -->
+    <string name="title_activity_signup">SignupActivity</string>
     <string name="logo">watcha</string>
     <string name="login">로그인</string>
     <string name="login_title">이메일로 로그인</string>
@@ -13,5 +13,7 @@
     <string name="password_placeholder">비밀번호를 입력하세요</string>
     <string name="password_confirm">비밀번호 확인</string>
     <string name="password_confirm_placeholder">비밀번호를 다시 입력하세요</string>
-    <string name="title_activity_signup">SignupActivity</string>
+    <string name="signup_email_toast">이메일 형식이 올바르지 않습니다.</string>
+    <string name="signup_password_toast">비밀번호는 8~12자여야 합니다.</string>
+    <string name="signup_password_confirmed_toast">비밀번호가 일치하지 않습니다.</string>
 </resources>
