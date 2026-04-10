@@ -1,4 +1,4 @@
-package com.example.letssopt.designsystem.component.button
+package com.example.letssopt.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
