@@ -31,8 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
-import com.example.letssopt.designsystem.component.button.LabeledTextField
-import com.example.letssopt.designsystem.component.button.PrimaryButton
+import com.example.letssopt.designsystem.component.LabeledTextField
+import com.example.letssopt.designsystem.component.PrimaryButton
 import com.example.letssopt.designsystem.theme.Background
 import com.example.letssopt.designsystem.theme.PrimaryRed
 import com.example.letssopt.designsystem.theme.TextPrimary

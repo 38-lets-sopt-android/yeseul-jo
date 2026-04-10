@@ -30,10 +30,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.letssopt.R
-import com.example.letssopt.designsystem.component.button.LabeledTextField
-import com.example.letssopt.designsystem.component.button.PrimaryButton
+import com.example.letssopt.designsystem.component.LabeledTextField
+import com.example.letssopt.designsystem.component.PrimaryButton
 import com.example.letssopt.designsystem.theme.Background
 import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.designsystem.theme.PrimaryRed
