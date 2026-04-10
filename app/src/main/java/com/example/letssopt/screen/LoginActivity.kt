@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -16,10 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.example.letssopt.R
+import com.example.letssopt.designsystem.component.button.LabeledTextField
+import com.example.letssopt.designsystem.component.button.PrimaryButton
+import com.example.letssopt.designsystem.theme.Background
 import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.designsystem.theme.PrimaryRed
+import com.example.letssopt.designsystem.theme.TextPrimary
+import com.example.letssopt.designsystem.theme.TextSecondary
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,19 +51,78 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun Login(modifier: Modifier = Modifier) {
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .padding(
+                start = 20.dp,
+                top = 60.dp,
+                end = 20.dp,
+                bottom = 26.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         Text(
             text = stringResource(R.string.logo),
             color = PrimaryRed,
-            style = typography.displayLarge
+            style = typography.displayLarge,
         )
 
+        Spacer(modifier = Modifier.height(26.dp))
+
+        Text(
+            text = stringResource(R.string.login_title),
+            color = TextPrimary,
+            style = typography.headlineMedium,
+            modifier = Modifier.align(Alignment.Start)
+        )
+
+        Spacer(modifier = Modifier.height(36.dp))
+
+        // input form
+        Column(
+            verticalArrangement = Arrangement.spacedBy(18.dp)
+        ) {
+            LabeledTextField(
+                label = stringResource(R.string.email),
+                value = email,
+                onValueChange = { email = it },
+                placeholder = stringResource(R.string.email_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.password),
+                value = password,
+                onValueChange = { password = it },
+                placeholder = stringResource(R.string.password_placeholder)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        // bottom
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(R.string.signup_question),
+                color = TextSecondary,
+                style = typography.labelSmall
+            )
+            PrimaryButton(
+                text = stringResource(R.string.login),
+                onClick = {},
+                enabled = email.isNotEmpty() && password.isNotEmpty()
+            )
+        }
     }
 }
 
@@ -59,6 +130,11 @@ fun Login(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview2() {
     LETSSOPTTheme {
-        Login()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Background
+        ) {
+            Login()
+        }
     }
 }
