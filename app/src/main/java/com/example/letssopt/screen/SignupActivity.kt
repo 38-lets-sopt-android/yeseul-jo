@@ -120,13 +120,15 @@ fun Signup(modifier: Modifier = Modifier) {
                 label = stringResource(R.string.password),
                 value = password,
                 onValueChange = { password = it },
-                placeholder = stringResource(R.string.password_placeholder)
+                placeholder = stringResource(R.string.password_placeholder),
+                isPassword = true
             )
             LabeledTextField(
                 label = stringResource(R.string.password_confirm),
                 value = passwordConfirm,
                 onValueChange = { passwordConfirm = it },
-                placeholder = stringResource(R.string.password_confirm_placeholder)
+                placeholder = stringResource(R.string.password_confirm_placeholder),
+                isPassword = true
             )
         }
 

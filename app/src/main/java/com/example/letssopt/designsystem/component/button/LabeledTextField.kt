@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun LabeledTextField(
     onValueChange: (String) -> Unit,
     placeholder: String,
     modifier: Modifier = Modifier,
-    visualTransformation: VisualTransformation = VisualTransformation.None // 비밀번호 숨김
+    isPassword: Boolean = false,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -51,7 +52,7 @@ fun LabeledTextField(
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             textStyle = typography.labelSmall.copy(color = TextPrimary),
-            visualTransformation = visualTransformation,
+            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             cursorBrush = SolidColor(PrimaryRed),
             decorationBox = { innerTextField ->
                 Box(
