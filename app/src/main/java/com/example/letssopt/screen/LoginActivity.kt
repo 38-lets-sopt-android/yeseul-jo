@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.letssopt.R
 import com.example.letssopt.designsystem.component.button.LabeledTextField
 import com.example.letssopt.designsystem.component.button.PrimaryButton
@@ -135,7 +136,8 @@ fun Login(
                 label = stringResource(R.string.password),
                 value = password,
                 onValueChange = { password = it },
-                placeholder = stringResource(R.string.password_placeholder)
+                placeholder = stringResource(R.string.password_placeholder),
+                isPassword = true
             )
         }
 
