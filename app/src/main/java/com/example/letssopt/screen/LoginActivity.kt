@@ -128,23 +128,20 @@ fun Login(
         Spacer(modifier = Modifier.height(36.dp))
 
         // input form
-        Column(
-            verticalArrangement = Arrangement.spacedBy(18.dp)
-        ) {
-            LabeledTextField(
-                label = stringResource(R.string.email),
-                value = email,
-                onValueChange = { email = it },
-                placeholder = stringResource(R.string.email_placeholder)
-            )
-            LabeledTextField(
-                label = stringResource(R.string.password),
-                value = password,
-                onValueChange = { password = it },
-                placeholder = stringResource(R.string.password_placeholder),
-                isPassword = true
-            )
-        }
+        LabeledTextField(
+            label = stringResource(R.string.email),
+            value = email,
+            onValueChange = { email = it },
+            placeholder = stringResource(R.string.email_placeholder)
+        )
+        Spacer(modifier = Modifier.height(18.dp))
+        LabeledTextField(
+            label = stringResource(R.string.password),
+            value = password,
+            onValueChange = { password = it },
+            placeholder = stringResource(R.string.password_placeholder),
+            isPassword = true
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
