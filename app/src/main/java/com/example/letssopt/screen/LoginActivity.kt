@@ -1,6 +1,5 @@
 package com.example.letssopt.screen
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -67,6 +66,12 @@ class LoginActivity : ComponentActivity() {
                         onSignupClick = {
                             val intent = Intent(this, SignupActivity::class.java)
                             signupLauncher.launch(intent)
+                        },
+                        onLoginSuccess = {
+                            Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                     )
                 }
@@ -80,9 +85,10 @@ fun Login(
     modifier: Modifier = Modifier,
     registeredEmail: String,
     registeredPassword: String,
-    onSignupClick: () -> Unit
+    onSignupClick: () -> Unit,
+    onLoginSuccess: () -> Unit
 ) {
-    val context = LocalContext.current as Activity
+    val context = LocalContext.current
 
     // 사용자가 입력한 값
     var email by remember {
@@ -157,10 +163,7 @@ fun Login(
                 text = stringResource(R.string.login),
                 onClick = {
                     if (email.trim() == registeredEmail.trim() && password.trim() == registeredPassword.trim()) {
-                        Toast.makeText(context, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
-                        context.finish()
+                        onLoginSuccess()
                     } else {
                         Toast.makeText(context, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
                     }
@@ -182,7 +185,8 @@ fun GreetingPreview2() {
             Login(
                 registeredEmail = "sopt@sopt.org",
                 registeredPassword = "password123",
-                onSignupClick = {}
+                onSignupClick = {},
+                onLoginSuccess = {}
             )
         }
     }
