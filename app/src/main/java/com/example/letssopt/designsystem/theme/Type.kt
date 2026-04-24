@@ -30,5 +30,6 @@ val Typography = Typography(
     headlineMedium = customTextStyle(20, FontWeight.W700),
     bodyLarge = customTextStyle(16, FontWeight.W400),
     labelLarge = customTextStyle(16, FontWeight.W700),
-    labelSmall = customTextStyle(14, FontWeight.W400)
+    labelSmall = customTextStyle(14, FontWeight.W400),
+    bodySmall = customTextStyle(12, FontWeight.W300)
 )

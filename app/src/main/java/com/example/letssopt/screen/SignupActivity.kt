@@ -2,7 +2,6 @@ package com.example.letssopt.screen
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,23 +17,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
+import com.example.letssopt.data.viewmodel.SignupViewModel
 import com.example.letssopt.designsystem.component.LabeledTextField
 import com.example.letssopt.designsystem.component.PrimaryButton
 import com.example.letssopt.designsystem.theme.Background
+import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.designsystem.theme.PrimaryRed
 import com.example.letssopt.designsystem.theme.TextPrimary
-import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 
 class SignupActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,28 +61,10 @@ class SignupActivity : ComponentActivity() {
 @Composable
 fun Signup(
     modifier: Modifier = Modifier,
+    viewModel: SignupViewModel = viewModel(),
     onSignupSuccess: (String, String) -> Unit
 ) {
     val context = LocalContext.current
-
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-    var passwordConfirm by remember {
-        mutableStateOf("")
-    }
-
-    // 모든 정보가 입력되었는지
-    val isAllInputFilled =
-        email.isNotEmpty() && password.isNotEmpty() && passwordConfirm.isNotEmpty()
-
-    // 회원가입 성공 조건
-    val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
-    val isPasswordValid = password.trim().length in 8..12
-    val isPasswordConfirmed = password.trim() == passwordConfirm.trim()
 
     Column(
         modifier = modifier
@@ -122,21 +101,21 @@ fun Signup(
         ) {
             LabeledTextField(
                 label = stringResource(R.string.email),
-                value = email,
-                onValueChange = { email = it },
+                value = viewModel.email,
+                onValueChange = { viewModel.email = it },
                 placeholder = stringResource(R.string.email_placeholder)
             )
             LabeledTextField(
                 label = stringResource(R.string.password),
-                value = password,
-                onValueChange = { password = it },
+                value = viewModel.password,
+                onValueChange = { viewModel.password = it },
                 placeholder = stringResource(R.string.password_placeholder),
                 isPassword = true
             )
             LabeledTextField(
                 label = stringResource(R.string.password_confirm),
-                value = passwordConfirm,
-                onValueChange = { passwordConfirm = it },
+                value = viewModel.passwordConfirm,
+                onValueChange = { viewModel.passwordConfirm = it },
                 placeholder = stringResource(R.string.password_confirm_placeholder),
                 isPassword = true
             )
@@ -149,36 +128,36 @@ fun Signup(
             text = stringResource(R.string.signup),
             onClick = {
                 when {
-                    !isEmailValid -> {
+                    !viewModel.isEmailValid -> {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.signup_email_toast),
+                            R.string.signup_email_toast,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
 
-                    !isPasswordValid -> {
+                    !viewModel.isPasswordValid -> {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.signup_password_toast),
+                            R.string.signup_password_toast,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
 
-                    !isPasswordConfirmed -> {
+                    !viewModel.isPasswordConfirmed -> {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.signup_password_confirmed_toast),
+                            R.string.signup_password_confirmed_toast,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
 
                     else -> {
-                        onSignupSuccess(email.trim(), password.trim())
+                        onSignupSuccess(viewModel.email, viewModel.password)
                     }
                 }
             },
-            enabled = isAllInputFilled
+            enabled = viewModel.isAllInputFilled
         )
     }
 }
