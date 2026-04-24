@@ -54,7 +54,7 @@ fun PrimaryButton(
 
 @Preview(showBackground = true)
 @Composable
-fun ButtonPreview() {
+private fun ButtonPreview() {
     LETSSOPTTheme {
         Column(
             modifier = Modifier

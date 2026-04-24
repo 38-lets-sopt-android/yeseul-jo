@@ -79,7 +79,7 @@ fun LabeledTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun TextFieldPreview() {
+private fun TextFieldPreview() {
     LETSSOPTTheme {
         Column(
             modifier = Modifier
