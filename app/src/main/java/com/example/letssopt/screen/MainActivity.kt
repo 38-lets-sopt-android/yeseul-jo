@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.letssopt.R
 import com.example.letssopt.designsystem.component.BottomNavigationBar
+import com.example.letssopt.designsystem.component.HomeTopAppBar
 import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.designsystem.theme.PrimaryRed
 import com.example.letssopt.designsystem.theme.TextPrimary
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = MaterialTheme.colorScheme.background,
+                    topBar = {
+                        HomeTopAppBar()
+                    },
                     bottomBar = {
                         BottomNavigationBar(navController = navController)
                     }
@@ -93,11 +97,14 @@ fun Greeting(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun MainFullPreview() {
+private fun HomePreview() {
     LETSSOPTTheme {
         val navController = rememberNavController()
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            topBar = {
+                HomeTopAppBar()
+            },
             bottomBar = {
                 BottomNavigationBar(navController = navController)
             }
