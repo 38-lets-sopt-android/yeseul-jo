@@ -1,4 +1,4 @@
-package com.example.letssopt.ui.theme
+package com.example.letssopt.screen.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
