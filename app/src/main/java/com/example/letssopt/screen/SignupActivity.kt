@@ -1,7 +1,5 @@
 package com.example.letssopt.screen
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -46,7 +44,16 @@ class SignupActivity : ComponentActivity() {
             LETSSOPTTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Signup(
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        onSignupSuccess = { email, password ->
+                            // 조건을 만족할 때 데이터 전달
+                            val intent = Intent().apply {
+                                putExtra("email", email.trim())
+                                putExtra("password", password.trim())
+                            }
+                            setResult(RESULT_OK, intent)
+                            finish()
+                        }
                     )
                 }
             }
@@ -55,8 +62,11 @@ class SignupActivity : ComponentActivity() {
 }
 
 @Composable
-fun Signup(modifier: Modifier = Modifier) {
-    val context = LocalContext.current as Activity
+fun Signup(
+    modifier: Modifier = Modifier,
+    onSignupSuccess: (String, String) -> Unit
+) {
+    val context = LocalContext.current
 
     var email by remember {
         mutableStateOf("")
@@ -73,9 +83,9 @@ fun Signup(modifier: Modifier = Modifier) {
         email.isNotEmpty() && password.isNotEmpty() && passwordConfirm.isNotEmpty()
 
     // 회원가입 성공 조건
-    val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    val isPasswordValid = password.length in 8..12
-    val isPasswordConfirmed = password == passwordConfirm
+    val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
+    val isPasswordValid = password.trim().length in 8..12
+    val isPasswordConfirmed = password.trim() == passwordConfirm.trim()
 
     Column(
         modifier = modifier
@@ -164,13 +174,7 @@ fun Signup(modifier: Modifier = Modifier) {
                     }
 
                     else -> {
-                        // 조건을 만족할 때 데이터 전달
-                        val intent = Intent().apply {
-                            putExtra("email", email)
-                            putExtra("password", password)
-                        }
-                        context.setResult(RESULT_OK, intent)
-                        context.finish()
+                        onSignupSuccess(email.trim(), password.trim())
                     }
                 }
             },
@@ -187,7 +191,9 @@ fun SignupPreview() {
             modifier = Modifier.fillMaxSize(),
             color = Background
         ) {
-            Signup()
+            Signup(
+                onSignupSuccess = { _, _ -> }
+            )
         }
     }
 }
