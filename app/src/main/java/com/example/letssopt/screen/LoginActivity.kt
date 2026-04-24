@@ -146,28 +146,25 @@ fun Login(
         Spacer(modifier = Modifier.weight(1f))
 
         // bottom
-        Column(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.signup_question),
-                color = TextSecondary,
-                style = typography.labelSmall,
-                modifier = Modifier.clickable { onSignupClick() }
-            )
-            PrimaryButton(
-                text = stringResource(R.string.login),
-                onClick = {
-                    if (email.trim() == registeredEmail.trim() && password.trim() == registeredPassword.trim()) {
-                        onLoginSuccess()
-                    } else {
-                        Toast.makeText(context, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                },
-                enabled = email.isNotEmpty() && password.isNotEmpty()
-            )
-        }
+        Text(
+            text = stringResource(R.string.signup_question),
+            color = TextSecondary,
+            style = typography.labelSmall,
+            modifier = Modifier.clickable { onSignupClick() }
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        PrimaryButton(
+            text = stringResource(R.string.login),
+            onClick = {
+                if (email.trim() == registeredEmail.trim() && password.trim() == registeredPassword.trim()) {
+                    onLoginSuccess()
+                } else {
+                    Toast.makeText(context, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            },
+            enabled = email.isNotEmpty() && password.isNotEmpty()
+        )
+
     }
 }
 
