@@ -3,8 +3,10 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_signup">SignupActivity</string>
     <string name="logo">watcha</string>
+    <!-- 로그인 -->
     <string name="login">로그인</string>
     <string name="login_title">이메일로 로그인</string>
+    <!-- 회원가입 -->
     <string name="signup">회원가입</string>
     <string name="signup_question">아직 계정이 없으신가요? 회원가입</string>
     <string name="email">이메일</string>
@@ -16,4 +18,10 @@
     <string name="signup_email_toast">이메일 형식이 올바르지 않습니다.</string>
     <string name="signup_password_toast">비밀번호는 8~12자여야 합니다.</string>
     <string name="signup_password_confirmed_toast">비밀번호가 일치하지 않습니다.</string>
+    <!-- 내비게이션 -->
+    <string name="nav_home">메인</string>
+    <string name="nav_store">개별 구매</string>
+    <string name="nav_webtoon">웹툰</string>
+    <string name="nav_search">찾기</string>
+    <string name="nav_library">보관함</string>
 </resources>
