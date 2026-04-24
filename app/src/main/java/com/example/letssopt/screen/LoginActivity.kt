@@ -170,7 +170,7 @@ fun Login(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview2() {
+private fun GreetingPreview2() {
     LETSSOPTTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),

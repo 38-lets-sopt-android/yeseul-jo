@@ -185,7 +185,7 @@ fun Signup(
 
 @Preview(showBackground = true)
 @Composable
-fun SignupPreview() {
+private fun SignupPreview() {
     LETSSOPTTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
