@@ -24,4 +24,13 @@
     <string name="nav_webtoon">웹툰</string>
     <string name="nav_search">찾기</string>
     <string name="nav_library">보관함</string>
+    <!-- 홈화면 -->
+    <string name="home_new_title">방금 막 도착한 신상 컨텐츠</string>
+    <string name="home_subtitle">예능부터 드라마까지!</string>
+    <string name="home_upcoming_title">공개 예정 콘텐츠</string>
+    <string name="home_watcha_party_title">왓챠 파티</string>
+    <string name="home_show_more">더보기</string>
+    <!-- 왓챠 파티 -->
+    <string name="home_watcha_party_time_format">오늘 %s에 시작</string>
+    <string name="home_watcha_party_title_format"># %s</string>
 </resources>
