@@ -14,22 +14,23 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
+import com.example.letssopt.data.DataStore
 import com.example.letssopt.designsystem.component.LabeledTextField
 import com.example.letssopt.designsystem.component.PrimaryButton
 import com.example.letssopt.designsystem.theme.Background
@@ -55,6 +56,15 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 자동 로그인 확인
+        if (DataStore.getAutoLogin(this)) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContent {
             LETSSOPTTheme {
@@ -68,6 +78,7 @@ class LoginActivity : ComponentActivity() {
                             signupLauncher.launch(intent)
                         },
                         onLoginSuccess = {
+                            DataStore.setAutoLogin(this, true)
                             Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
