@@ -67,7 +67,7 @@ class LoginActivity : ComponentActivity() {
         setContent {
             LETSSOPTTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Login(
+                    LoginScreen(
                         modifier = Modifier.padding(innerPadding),
                         viewModel = viewModel,
                         onSignupClick = {
@@ -89,7 +89,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun Login(
+private fun LoginScreen(
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(),
     onSignupClick: () -> Unit,
@@ -175,7 +175,7 @@ private fun GreetingPreview2() {
             modifier = Modifier.fillMaxSize(),
             color = Background
         ) {
-            Login(
+            LoginScreen(
                 onSignupClick = {},
                 onLoginSuccess = {}
             )

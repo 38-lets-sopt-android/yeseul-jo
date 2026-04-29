@@ -19,7 +19,9 @@ fun NewBannerCard(
     Image(
         painter = painterResource(id = item.imageUrl),
         contentDescription = null,
-        modifier = Modifier.width(280.dp).aspectRatio(7f / 4f)
+        modifier = Modifier
+            .width(280.dp)
+            .aspectRatio(7f / 4f)
             .clip(RoundedCornerShape(10.dp)),
         contentScale = ContentScale.Crop
     )
