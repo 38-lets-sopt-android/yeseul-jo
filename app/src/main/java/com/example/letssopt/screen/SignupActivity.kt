@@ -102,20 +102,20 @@ fun SignupScreen(
             LabeledTextField(
                 label = stringResource(R.string.email),
                 value = viewModel.email,
-                onValueChange = { viewModel.email = it },
+                onValueChange = { viewModel.updateEmail(it) },
                 placeholder = stringResource(R.string.email_placeholder)
             )
             LabeledTextField(
                 label = stringResource(R.string.password),
                 value = viewModel.password,
-                onValueChange = { viewModel.password = it },
+                onValueChange = { viewModel.updatePassword(it) },
                 placeholder = stringResource(R.string.password_placeholder),
                 isPassword = true
             )
             LabeledTextField(
                 label = stringResource(R.string.password_confirm),
                 value = viewModel.passwordConfirm,
-                onValueChange = { viewModel.passwordConfirm = it },
+                onValueChange = { viewModel.updatePasswordConfirm(it) },
                 placeholder = stringResource(R.string.password_confirm_placeholder),
                 isPassword = true
             )

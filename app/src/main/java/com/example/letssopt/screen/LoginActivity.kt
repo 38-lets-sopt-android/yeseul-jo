@@ -46,8 +46,10 @@ class LoginActivity : ComponentActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            viewModel.registeredEmail = result.data?.getStringExtra("email") ?: ""
-            viewModel.registeredPassword = result.data?.getStringExtra("password") ?: ""
+            val email = result.data?.getStringExtra("email") ?: ""
+            val password = result.data?.getStringExtra("password") ?: ""
+            viewModel.updateRegisteredInfo(email, password)
+
             Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -130,14 +132,14 @@ private fun LoginScreen(
         LabeledTextField(
             label = stringResource(R.string.email),
             value = viewModel.email,
-            onValueChange = { viewModel.email = it },
+            onValueChange = { viewModel.updateEmail(it) },
             placeholder = stringResource(R.string.email_placeholder)
         )
         Spacer(modifier = Modifier.height(18.dp))
         LabeledTextField(
             label = stringResource(R.string.password),
             value = viewModel.password,
-            onValueChange = { viewModel.password = it },
+            onValueChange = { viewModel.updatePassword(it) },
             placeholder = stringResource(R.string.password_placeholder),
             isPassword = true
         )

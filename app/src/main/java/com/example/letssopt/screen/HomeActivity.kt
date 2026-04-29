@@ -44,10 +44,9 @@ fun HomeScreen(
                 subtitle = R.string.home_subtitle,
                 showMore = false,
                 spacerHeight = 24,
-                modifier = Modifier.padding(top = 24.dp)
-            ) { item ->
-                NewBannerCard(item = item)
-            }
+                modifier = Modifier.padding(top = 24.dp),
+                content = { NewBannerCard(it) }
+            )
         }
 
         // 왓고리즘
@@ -56,10 +55,9 @@ fun HomeScreen(
                 items = viewModel.watGorithmContents,
                 titleIcon = R.drawable.ic_watgorithm,
                 subtitle = R.string.home_subtitle,
-                showMore = true
-            ) { item ->
-                VerticalCard(item = item)
-            }
+                showMore = true,
+                content = { VerticalCard(it) }
+            )
         }
 
         // 공개 예정 콘텐츠
@@ -67,10 +65,9 @@ fun HomeScreen(
             ContentSection(
                 items = viewModel.watGorithmContents,
                 title = R.string.home_upcoming_title,
-                showMore = true
-            ) { item ->
-                VerticalCard(item = item)
-            }
+                showMore = true,
+                content = { VerticalCard(it) }
+            )
         }
 
         // 왓챠 파티
@@ -78,10 +75,9 @@ fun HomeScreen(
             ContentSection(
                 items = viewModel.watchaPartyContents,
                 title = R.string.home_watcha_party_title,
-                showMore = true
-            ) { item ->
-                WatchaPartyCard(item = item)
-            }
+                showMore = true,
+                content = { WatchaPartyCard(it) }
+            )
         }
     }
 }
