@@ -2,7 +2,6 @@ package com.example.letssopt.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,10 +26,11 @@ import com.example.letssopt.designsystem.theme.LETSSOPTTheme
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Background),
         contentPadding = PaddingValues(bottom = 15.dp),
@@ -100,9 +100,9 @@ private fun HomePreview() {
                 BottomNavigationBar(navController = navController)
             }
         ) { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                HomeScreen()
-            }
+            HomeScreen(
+                modifier = Modifier.padding(innerPadding)
+            )
         }
     }
 }

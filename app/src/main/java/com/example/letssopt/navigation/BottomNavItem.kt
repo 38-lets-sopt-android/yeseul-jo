@@ -9,34 +9,6 @@ sealed class BottomNavItem (
     @get:DrawableRes val icon: Int,
     val route: String,
 ){
-    data object Home : BottomNavItem(
-        title = R.string.nav_home,
-        icon = R.drawable.ic_nav_home,
-        route = NavigationType.HOME
-    )
-    data object Store : BottomNavItem(
-        title = R.string.nav_store,
-        icon = R.drawable.ic_nav_store,
-        route = NavigationType.STORE
-    )
-    data object Webtoon : BottomNavItem(
-        title = R.string.nav_webtoon,
-        icon = R.drawable.ic_nav_webtoon,
-        route = NavigationType.WEBTOON
-    )
-    data object Search : BottomNavItem(
-        title = R.string.nav_search,
-        icon = R.drawable.ic_nav_search,
-        route = NavigationType.SEARCH
-    )
-    data object Library : BottomNavItem(
-        title = R.string.nav_library,
-        icon = R.drawable.ic_nav_library,
-        route = NavigationType.LIBRARY
-    )
-}
-
-class NavigationType {
     companion object {
         const val HOME = "home"
         const val STORE = "store"
@@ -44,4 +16,30 @@ class NavigationType {
         const val SEARCH = "search"
         const val LIBRARY = "library"
     }
+
+    data object Home : BottomNavItem(
+        title = R.string.nav_home,
+        icon = R.drawable.ic_nav_home,
+        route = HOME
+    )
+    data object Store : BottomNavItem(
+        title = R.string.nav_store,
+        icon = R.drawable.ic_nav_store,
+        route = STORE
+    )
+    data object Webtoon : BottomNavItem(
+        title = R.string.nav_webtoon,
+        icon = R.drawable.ic_nav_webtoon,
+        route = WEBTOON
+    )
+    data object Search : BottomNavItem(
+        title = R.string.nav_search,
+        icon = R.drawable.ic_nav_search,
+        route = SEARCH
+    )
+    data object Library : BottomNavItem(
+        title = R.string.nav_library,
+        icon = R.drawable.ic_nav_library,
+        route = LIBRARY
+    )
 }
