@@ -19,7 +19,7 @@ fun ContentSection(
     titleIcon: Int? = null,
     subtitle: Int? = null,
     showMore: Boolean = false,
-    spacerHieght: Int = 6,
+    spacerHeight: Int = 8,
     modifier: Modifier = Modifier,
     content: @Composable (ContentItem) -> Unit
 ) {
@@ -31,7 +31,7 @@ fun ContentSection(
             showMore = showMore
         )
 
-        Spacer(modifier = Modifier.height(spacerHieght.dp))
+        Spacer(modifier = Modifier.height(spacerHeight.dp))
 
         LazyRow(
             contentPadding = PaddingValues(horizontal = 8.dp),

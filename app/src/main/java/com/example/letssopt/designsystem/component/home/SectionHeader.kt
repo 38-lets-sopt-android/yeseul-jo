@@ -1,31 +1,31 @@
 package com.example.letssopt.designsystem.component.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
 import com.example.letssopt.designsystem.theme.TextSecondary
 
 @Composable
 fun SectionHeader(
+    modifier: Modifier = Modifier,
     title: Int? = null,
     titleIcon: Int? = null,
     subtitle: Int? = null,
-    showMore: Boolean = false,
-    modifier: Modifier = Modifier
+    showMore: Boolean = false
 ) {
     Row(
         modifier = modifier
@@ -36,10 +36,10 @@ fun SectionHeader(
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             if (titleIcon != null) {
-                Image(
-                    painter = painterResource(id = titleIcon),
+                Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_watgorithm),
                     contentDescription = null,
-                    modifier = Modifier.height(26.dp)
+                    tint = Color.Unspecified
                 )
             } else if (title != null) {
                 Text(
