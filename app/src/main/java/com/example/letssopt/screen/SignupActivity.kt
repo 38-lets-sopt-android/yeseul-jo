@@ -40,7 +40,7 @@ class SignupActivity : ComponentActivity() {
         setContent {
             LETSSOPTTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Signup(
+                    SignupScreen(
                         modifier = Modifier.padding(innerPadding),
                         onSignupSuccess = { email, password ->
                             // 조건을 만족할 때 데이터 전달
@@ -59,7 +59,7 @@ class SignupActivity : ComponentActivity() {
 }
 
 @Composable
-fun Signup(
+fun SignupScreen(
     modifier: Modifier = Modifier,
     viewModel: SignupViewModel = viewModel(),
     onSignupSuccess: (String, String) -> Unit
@@ -170,7 +170,7 @@ private fun SignupPreview() {
             modifier = Modifier.fillMaxSize(),
             color = Background
         ) {
-            Signup(
+            SignupScreen(
                 onSignupSuccess = { _, _ -> }
             )
         }

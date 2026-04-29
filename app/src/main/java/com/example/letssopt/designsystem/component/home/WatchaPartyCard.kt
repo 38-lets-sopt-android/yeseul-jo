@@ -19,9 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
 import com.example.letssopt.data.model.ContentItem
@@ -58,7 +60,7 @@ fun WatchaPartyCard(
                     .align(Alignment.TopEnd)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_watcha_party_noti),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_watcha_party_noti),
                     contentDescription = null,
                     tint = Color.Black,
                     modifier = Modifier.padding(8.dp)

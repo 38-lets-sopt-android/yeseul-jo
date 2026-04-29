@@ -17,27 +17,29 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.letssopt.designsystem.theme.Background
 import com.example.letssopt.designsystem.theme.Disabled
 import com.example.letssopt.navigation.BottomNavItem
-import com.example.letssopt.navigation.NavigationType
+
+val navigationTabList = listOf(
+    BottomNavItem.Home,
+    BottomNavItem.Store,
+    BottomNavItem.Webtoon,
+    BottomNavItem.Search,
+    BottomNavItem.Library
+)
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val navigationTabList = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Store,
-        BottomNavItem.Webtoon,
-        BottomNavItem.Search,
-        BottomNavItem.Library
-    )
 
     NavigationBar(
         containerColor = Background,
         tonalElevation = 0.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: NavigationType.HOME
+        val currentRoute = navBackStackEntry?.destination?.route
 
         navigationTabList.forEach { item ->
             val isSelected = currentRoute == item.route
+            val label = stringResource(id = item.title)
+
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
@@ -52,13 +54,13 @@ fun BottomNavigationBar(navController: NavController) {
                 icon = {
                     Icon(
                         painter = painterResource(id = item.icon),
-                        contentDescription = stringResource(id = item.title),
+                        contentDescription = label,
                         tint = if (isSelected) Color.White else Disabled
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(id = item.title),
+                        text = label,
                         color = if (isSelected)  Color.White else Disabled
                     )
                 },
