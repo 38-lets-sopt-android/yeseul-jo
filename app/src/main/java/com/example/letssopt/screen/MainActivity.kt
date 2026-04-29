@@ -17,7 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.letssopt.designsystem.component.BottomNavigationBar
 import com.example.letssopt.designsystem.component.HomeTopAppBar
 import com.example.letssopt.designsystem.theme.LETSSOPTTheme
-import com.example.letssopt.navigation.NavigationType
+import com.example.letssopt.navigation.BottomNavItem
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,31 +39,31 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = NavigationType.HOME,
+                        startDestination = BottomNavItem.Home.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(NavigationType.HOME) {
+                        composable(BottomNavItem.Home.route) {
                             HomeScreen()
                         }
-                        composable(NavigationType.STORE) {
+                        composable(BottomNavItem.Store.route) {
                             Text(
                                 "Store Screen",
                                 color = Color.White
                             )
                         }
-                        composable(NavigationType.WEBTOON) {
+                        composable(BottomNavItem.Webtoon.route) {
                             Text(
                                 "Webtoon Screen",
                                 color = Color.White
                             )
                         }
-                        composable(NavigationType.SEARCH) {
+                        composable(BottomNavItem.Search.route) {
                             Text(
                                 "Search Screen",
                                 color = Color.White
                             )
                         }
-                        composable(NavigationType.LIBRARY) {
+                        composable(BottomNavItem.Library.route) {
                             Text(
                                 "Library Screen",
                                 color = Color.White

@@ -15,8 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
 import com.example.letssopt.designsystem.theme.Background
@@ -44,14 +45,32 @@ fun HomeTopAppBar() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
-                    Icon(painterResource(id = R.drawable.ic_top_watch), "Watch")
+                IconButton(
+                    onClick = {},
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_top_watch),
+                        "Watch"
+                    )
                 }
-                IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
-                    Icon(painterResource(id = R.drawable.ic_top_noti), "Noti")
+                IconButton(
+                    onClick = {},
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_top_noti),
+                        "Noti"
+                    )
                 }
-                IconButton(onClick = {}, modifier = Modifier.size(24.dp)) {
-                    Icon(painterResource(id = R.drawable.ic_top_profile), "Profile")
+                IconButton(
+                    onClick = {},
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_top_profile),
+                        "Profile"
+                    )
                 }
             }
         })
