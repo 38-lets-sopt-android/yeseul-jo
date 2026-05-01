@@ -24,15 +24,10 @@ class LoginViewModel : ViewModel() {
         password = newPassword
     }
 
-    fun updateRegisteredInfo(email: String, password: String) {
-        registeredEmail = email
-        registeredPassword = password
-    }
-
     val isLoginEnabled get() = email.isNotEmpty() && password.isNotEmpty()
 
-    fun checkLoginSuccess(): Boolean {
-        return email.trim() == registeredEmail.trim() &&
-                password.trim() == registeredPassword.trim()
+    fun checkLoginSuccess(savedEmail: String, savedPassword: String): Boolean {
+        return email.trim() == savedEmail.trim() &&
+                password.trim() == savedPassword.trim()
     }
 }

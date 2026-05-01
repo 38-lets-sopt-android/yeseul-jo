@@ -1,6 +1,8 @@
 package com.example.letssopt.presentation.home
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.letssopt.R
 import com.example.letssopt.presentation.home.model.ContentItem

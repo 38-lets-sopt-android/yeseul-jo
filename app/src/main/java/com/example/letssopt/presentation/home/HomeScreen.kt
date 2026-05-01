@@ -16,10 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.letssopt.R
 import com.example.letssopt.core.designsystem.theme.Background
 import com.example.letssopt.core.designsystem.theme.LETSSOPTTheme
-import com.example.letssopt.presentation.home.HomeViewModel
 import com.example.letssopt.presentation.home.component.BottomNavigationBar
-import com.example.letssopt.presentation.home.component.HomeTopAppBar
 import com.example.letssopt.presentation.home.component.ContentSection
+import com.example.letssopt.presentation.home.component.HomeTopAppBar
 import com.example.letssopt.presentation.home.component.NewBannerCard
 import com.example.letssopt.presentation.home.component.VerticalCard
 import com.example.letssopt.presentation.home.component.WatchaPartyCard
@@ -90,7 +89,7 @@ private fun HomePreview() {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                HomeTopAppBar()
+                HomeTopAppBar(navController = navController)
             },
             bottomBar = {
                 BottomNavigationBar(navController = navController)

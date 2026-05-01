@@ -1,13 +1,6 @@
 package com.example.letssopt.presentation.login
 
-import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
+import com.example.letssopt.core.data.DataStore
 import com.example.letssopt.core.designsystem.component.LabeledTextField
 import com.example.letssopt.core.designsystem.component.PrimaryButton
 import com.example.letssopt.core.designsystem.theme.Background
@@ -35,68 +28,13 @@ import com.example.letssopt.core.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.core.designsystem.theme.PrimaryRed
 import com.example.letssopt.core.designsystem.theme.TextPrimary
 import com.example.letssopt.core.designsystem.theme.TextSecondary
-import com.example.letssopt.core.data.DataStore
-import com.example.letssopt.presentation.main.MainActivity
-import com.example.letssopt.presentation.signup.SignupActivity
-
-class LoginActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<LoginViewModel>()
-
-    private val signupLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val email = result.data?.getStringExtra("email") ?: ""
-            val password = result.data?.getStringExtra("password") ?: ""
-            viewModel.updateRegisteredInfo(email, password)
-
-            Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // 자동 로그인 확인
-        if (DataStore.getAutoLogin(this)) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
-        }
-
-        enableEdgeToEdge()
-        setContent {
-            LETSSOPTTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = viewModel,
-                        onSignupClick = {
-                            val intent = Intent(this, SignupActivity::class.java)
-                            signupLauncher.launch(intent)
-                        },
-                        onLoginSuccess = {
-                            DataStore.setAutoLogin(this, true)
-                            Toast.makeText(this, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Composable
-private fun LoginScreen(
+fun LoginScreen(
+    onSignupClick: () -> Unit, // 회원가입 버튼 클릭 시
+    onLoginSuccess: () -> Unit, // 로그인 성공 시
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(),
-    onSignupClick: () -> Unit,
-    onLoginSuccess: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -158,8 +96,12 @@ private fun LoginScreen(
         PrimaryButton(
             text = stringResource(R.string.login),
             onClick = {
-                if (viewModel.checkLoginSuccess()) {
+                val savedEmail = DataStore.getSavedEmail(context)
+                val savedPassword = DataStore.getSavedPassword(context)
+
+                if (viewModel.checkLoginSuccess(savedEmail, savedPassword)) {
                     onLoginSuccess()
+                    Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -172,7 +114,7 @@ private fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun GreetingPreview2() {
+private fun LoginPreview() {
     LETSSOPTTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
