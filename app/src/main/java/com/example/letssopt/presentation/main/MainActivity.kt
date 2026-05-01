@@ -15,10 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.letssopt.core.designsystem.theme.LETSSOPTTheme
+import com.example.letssopt.presentation.home.HomeScreen
+import com.example.letssopt.presentation.home.model.BottomNavItem
 import com.example.letssopt.presentation.home.component.BottomNavigationBar
 import com.example.letssopt.presentation.home.component.HomeTopAppBar
-import com.example.letssopt.presentation.home.component.BottomNavItem
-import com.example.letssopt.presentation.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +26,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LETSSOPTTheme {
+                // 화면 이동 컨트롤러
                 val navController = rememberNavController()
 
                 Scaffold(
-                    modifier = Modifier.Companion.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     containerColor = MaterialTheme.colorScheme.background,
                     topBar = {
                         HomeTopAppBar()
@@ -40,8 +41,8 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = BottomNavItem.Home.route,
-                        modifier = Modifier.Companion.padding(innerPadding)
+                        startDestination = BottomNavItem.Home.route, // 시작 위치
+                        modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(BottomNavItem.Home.route) {
                             HomeScreen()
@@ -49,25 +50,25 @@ class MainActivity : ComponentActivity() {
                         composable(BottomNavItem.Store.route) {
                             Text(
                                 "Store Screen",
-                                color = Color.Companion.White
+                                color = Color.White
                             )
                         }
                         composable(BottomNavItem.Webtoon.route) {
                             Text(
                                 "Webtoon Screen",
-                                color = Color.Companion.White
+                                color = Color.White
                             )
                         }
                         composable(BottomNavItem.Search.route) {
                             Text(
                                 "Search Screen",
-                                color = Color.Companion.White
+                                color = Color.White
                             )
                         }
                         composable(BottomNavItem.Library.route) {
                             Text(
                                 "Library Screen",
-                                color = Color.Companion.White
+                                color = Color.White
                             )
                         }
                     }

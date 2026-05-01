@@ -16,7 +16,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.letssopt.core.designsystem.theme.Background
 import com.example.letssopt.core.designsystem.theme.Disabled
-import com.example.letssopt.presentation.home.component.BottomNavItem
+import com.example.letssopt.presentation.home.model.BottomNavItem
 
 val navigationTabList = listOf(
     BottomNavItem.Home,
