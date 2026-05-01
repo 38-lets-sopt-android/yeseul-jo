@@ -5,6 +5,17 @@ import kotlinx.serialization.Serializable
 // 앱 전체 주소록
 @Serializable
 sealed interface Route {
+    @Serializable
+    data object AuthGraph : Route
+    @Serializable
+    data object MainGraph : Route
+
+    // Auth
+    @Serializable
+    data object LOGIN : Route
+    @Serializable
+    data object SIGNUP : Route
+
     // BottomNavBar
     @Serializable
     data object HOME : Route
@@ -16,10 +27,4 @@ sealed interface Route {
     data object SEARCH : Route
     @Serializable
     data object LIBRARY : Route
-
-    // Screens
-    @Serializable
-    data object LOGIN : Route
-    @Serializable
-    data object SIGNUP : Route
 }

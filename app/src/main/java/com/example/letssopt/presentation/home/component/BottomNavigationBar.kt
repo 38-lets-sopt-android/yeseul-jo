@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.toRoute
@@ -24,17 +25,24 @@ import com.example.letssopt.presentation.home.model.BottomNavItem
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    // 현재 경로
+    val currentDestination = navBackStackEntry?.destination
+
     val currentRoute = try {
         navBackStackEntry?.toRoute<Route>()
     } catch (e: Exception) {
         null
     }
 
-    // 로그인, 회원가입 화면에서는 노출하지 않음
-    if (currentRoute is Route.LOGIN || currentRoute is Route.SIGNUP || currentRoute == null) {
-        return
-    }
+    // 탭 화면에서만 노출
+    val isTabScreen = currentDestination?.let { dest ->
+        dest.hasRoute<Route.HOME>() ||
+                dest.hasRoute<Route.STORE>() ||
+                dest.hasRoute<Route.WEBTOON>() ||
+                dest.hasRoute<Route.SEARCH>() ||
+                dest.hasRoute<Route.LIBRARY>()
+    } ?: false
+
+    if (!isTabScreen) return
 
     NavigationBar(
         containerColor = Background,
