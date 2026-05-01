@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +35,17 @@ fun SignupScreen(
     viewModel: SignupViewModel = viewModel()
 ) {
     val context = LocalContext.current
+    val state = viewModel.state
+
+    LaunchedEffect(state) {
+        if (state.isSignupSuccess) {
+            onSignupSuccess(viewModel.email, viewModel.password)
+        }
+        state.errorMessageRes?.let { resId ->
+            Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+            viewModel.clearErrorMessage()
+        }
+    }
 
     Column(
         modifier = modifier
@@ -97,35 +109,7 @@ fun SignupScreen(
         PrimaryButton(
             text = stringResource(R.string.signup),
             onClick = {
-                when {
-                    !viewModel.isEmailValid -> {
-                        Toast.makeText(
-                            context,
-                            R.string.signup_email_toast,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    !viewModel.isPasswordValid -> {
-                        Toast.makeText(
-                            context,
-                            R.string.signup_password_toast,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    !viewModel.isPasswordConfirmed -> {
-                        Toast.makeText(
-                            context,
-                            R.string.signup_password_confirmed_toast,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    else -> {
-                        onSignupSuccess(viewModel.email, viewModel.password)
-                    }
-                }
+                viewModel.signup()
             },
             enabled = viewModel.isAllInputFilled
         )

@@ -27,6 +27,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
+    val state = viewModel.state
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -45,7 +47,7 @@ fun HomeScreen(
             // 신상 콘텐츠
             item {
                 ContentSection(
-                    items = viewModel.newContents,
+                    items = state.newContents,
                     title = R.string.home_new_title,
                     subtitle = R.string.home_subtitle,
                     showMore = false,
@@ -58,7 +60,7 @@ fun HomeScreen(
             // 왓고리즘
             item {
                 ContentSection(
-                    items = viewModel.watGorithmContents,
+                    items = state.watGorithmContents,
                     titleIcon = R.drawable.ic_watgorithm,
                     subtitle = R.string.home_subtitle,
                     showMore = true,
@@ -69,7 +71,7 @@ fun HomeScreen(
             // 공개 예정 콘텐츠
             item {
                 ContentSection(
-                    items = viewModel.watGorithmContents,
+                    items = state.watGorithmContents,
                     title = R.string.home_upcoming_title,
                     showMore = true,
                     content = { VerticalCard(it) }
@@ -79,7 +81,7 @@ fun HomeScreen(
             // 왓챠 파티
             item {
                 ContentSection(
-                    items = viewModel.watchaPartyContents,
+                    items = state.watchaPartyContents,
                     title = R.string.home_watcha_party_title,
                     showMore = true,
                     content = { WatchaPartyCard(it) }

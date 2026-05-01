@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +39,18 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
 ) {
     val context = LocalContext.current
+    val state = viewModel.state
+
+    LaunchedEffect(state) {
+        if (state.isLoginSuccess) {
+            onLoginSuccess()
+            Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+        }
+        state.errorMessage?.let { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.clearErrorMessage()
+        }
+    }
 
     Column(
         modifier = modifier
@@ -100,13 +113,7 @@ fun LoginScreen(
             onClick = {
                 val savedEmail = DataStore.getSavedEmail(context)
                 val savedPassword = DataStore.getSavedPassword(context)
-
-                if (viewModel.checkLoginSuccess(savedEmail, savedPassword)) {
-                    onLoginSuccess()
-                    Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show()
-                }
+                viewModel.login(savedEmail, savedPassword)
             },
             enabled = viewModel.isLoginEnabled
         )
