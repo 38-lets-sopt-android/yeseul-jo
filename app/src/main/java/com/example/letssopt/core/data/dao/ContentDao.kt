@@ -17,4 +17,7 @@ interface ContentDao {
 
     @Query("DELETE FROM contents")
     suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveContent(content: Content)
 }

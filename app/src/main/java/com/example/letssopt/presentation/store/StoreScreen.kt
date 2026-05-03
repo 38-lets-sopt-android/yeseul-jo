@@ -1,5 +1,6 @@
 package com.example.letssopt.presentation.store
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,13 +24,17 @@ import com.example.letssopt.presentation.store.component.StoreContent
 fun StoreScreen(
     viewModel: StoreViewModel = viewModel(
         factory = StoreViewModel.provideFactory(
-            AppDatabase.getDatabase(LocalContext.current).contentDao()
+            AppDatabase.getDatabase(LocalContext.current).contentDao(),
+            AppDatabase.getDatabase(LocalContext.current).libraryDao()
+
         )
     ),
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     // DB 관찰
     val contents by viewModel.storeContents.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -52,7 +57,13 @@ fun StoreScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(contents) { item ->
-                StoreContent(item)
+                StoreContent(
+                    content = item,
+                    onSaveClick = {
+                        viewModel.onSaveClick(item)
+                        Toast.makeText(context, "보관함에 저장되었습니다!", Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
         }
     }
