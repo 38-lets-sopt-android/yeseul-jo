@@ -48,11 +48,9 @@ fun BottomNavigationBar(navController: NavController) {
         containerColor = Background,
         tonalElevation = 0.dp
     ) {
-        val currentTab = BottomNavItem.fromRoute(currentRoute)
-
         BottomNavItem.entries.forEach { item ->
             // 현재 경로와 비교
-            val isSelected = currentTab == item
+            val isSelected = currentDestination?.hasRoute(item.route::class) ?: false
             val tabLabel = stringResource(id = item.title)
 
             NavigationBarItem(
