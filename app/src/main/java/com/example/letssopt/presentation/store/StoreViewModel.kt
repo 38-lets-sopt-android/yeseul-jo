@@ -20,12 +20,12 @@ class StoreViewModel(private val contentDao: ContentDao) : ViewModel() {
 
     private fun insertData() {
         viewModelScope.launch(Dispatchers.IO) {
-            val dummyList = listOf(
-                Content(title = "이 사랑 통역 되나요", image = R.drawable.content_1),
-                Content(title = "이상한일5", image = R.drawable.content_2),
-                Content(title = "하일매리", image = R.drawable.content_3),
-                Content(title = "이 사랑 통역 되나요", image = R.drawable.content_1),
-                Content(title = "이상한일5", image = R.drawable.content_2),
+             val dummyList = listOf(
+                Content(id = 1, title = "이 사랑 통역 되나요", image = R.drawable.content_1),
+                Content(id = 2, title = "이상한일5", image = R.drawable.content_2),
+                Content(id = 3, title = "하일매리", image = R.drawable.content_3),
+                Content(id = 4, title = "이 사랑 통역 되나요", image = R.drawable.content_1),
+                Content(id = 5, title = "이상한일5", image = R.drawable.content_2),
             )
 
             dummyList.forEach {
