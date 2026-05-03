@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.toRoute
 import com.example.letssopt.core.designsystem.theme.Background
 import com.example.letssopt.core.designsystem.theme.Disabled
 import com.example.letssopt.core.navigation.Route
@@ -26,12 +25,6 @@ import com.example.letssopt.presentation.home.model.BottomNavItem
 fun BottomNavigationBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-
-    val currentRoute = try {
-        navBackStackEntry?.toRoute<Route>()
-    } catch (e: Exception) {
-        null
-    }
 
     // 탭 화면에서만 노출
     val isTabScreen = currentDestination?.let { dest ->
