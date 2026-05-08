@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.letssopt.core.data.DataStore
+import com.example.letssopt.core.data.local.DataStore
 import com.example.letssopt.core.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.core.navigation.Route
 import com.example.letssopt.presentation.login.LoginScreen

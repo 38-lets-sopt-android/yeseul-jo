@@ -16,12 +16,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
 import com.example.letssopt.core.designsystem.component.LabeledTextField
@@ -38,15 +40,23 @@ fun SignupScreen(
     viewModel: SignupViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val state = viewModel.state
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state) {
-        if (state.isSignupSuccess) {
-            onSignupSuccess(viewModel.email, viewModel.password)
-        }
-        state.errorMessageRes?.let { resId ->
-            Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
-            viewModel.clearErrorMessage()
+    LaunchedEffect(uiState) {
+        when (uiState) {
+            is SignUpUiState.Success -> {
+                onSignupSuccess(viewModel.email, viewModel.password)
+            }
+            is SignUpUiState.Error -> {
+                Toast.makeText(context, (uiState as SignUpUiState.Error).message, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+            is SignUpUiState.Failure -> {
+                val resId = (uiState as SignUpUiState.Failure).messageRes
+                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+            else -> Unit
         }
     }
 

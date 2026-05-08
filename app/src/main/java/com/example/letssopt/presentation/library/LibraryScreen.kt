@@ -16,7 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.letssopt.core.data.AppDatabase
+import com.example.letssopt.core.data.local.AppDatabase
+import com.example.letssopt.core.data.local.entity.Content
 import com.example.letssopt.presentation.library.component.LibraryContent
 
 @Composable
@@ -55,7 +56,7 @@ fun LibraryScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             items(libraryList, key = { it.id }) { libraryItem ->
-                val content = com.example.letssopt.core.data.entity.Content(
+                val content = Content(
                     id = libraryItem.id,
                     title = libraryItem.title,
                     image = libraryItem.image

@@ -5,12 +5,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.letssopt.R
-
-data class SignupState(
-    val isSignupSuccess: Boolean = false,
-    val errorMessageRes: Int? = null
-)
+import com.example.letssopt.core.data.network.RetrofitClient
+import com.example.letssopt.core.data.network.signup.dto.SignUpRequest
+import com.example.letssopt.core.data.network.signup.service.SignupService
+import com.example.letssopt.core.util.getErrorMsg
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class SignupViewModel : ViewModel() {
     var id by mutableStateOf("")
@@ -32,7 +36,8 @@ class SignupViewModel : ViewModel() {
     var part by mutableStateOf("")
         private set
 
-    var state by mutableStateOf(SignupState())
+    private val _uiState = MutableStateFlow<SignUpUiState>(SignUpUiState.Idle)
+    val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
 
     fun updateId(newId: String) {
         id = newId
@@ -67,24 +72,49 @@ class SignupViewModel : ViewModel() {
     private val isPasswordConfirmed get() = password.trim() == passwordConfirm.trim()
     val isAllInputFilled get() = email.isNotEmpty() && password.isNotEmpty() && passwordConfirm.isNotEmpty()
 
+    private val signupService = RetrofitClient.create(SignupService::class.java)
+
     fun signup() {
-        when {
-            !isEmailValid -> {
-                state = SignupState(errorMessageRes = R.string.signup_email_toast)
-            }
-            !isPasswordValid -> {
-                state = SignupState(errorMessageRes = R.string.signup_password_toast)
-            }
-            !isPasswordConfirmed -> {
-                state = SignupState(errorMessageRes = R.string.signup_password_confirmed_toast)
-            }
-            else -> {
-                state = SignupState(isSignupSuccess = true)
+        // 유효성 검사
+        val errorRes = when {
+            !isEmailValid -> R.string.signup_email_toast
+            !isPasswordValid -> R.string.signup_password_toast
+            !isPasswordConfirmed -> R.string.signup_password_confirmed_toast
+            else -> null
+        }
+
+        if (errorRes != null) {
+            _uiState.value = SignUpUiState.Failure(errorRes)
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.value = SignUpUiState.Loading
+
+            runCatching {
+                signupService.signup(
+                    SignUpRequest(
+                        loginId = id,
+                        password = password,
+                        name = name,
+                        email = email,
+                        age = age.toIntOrNull() ?: 0,
+                        part = part
+                    )
+                )
+            }.onSuccess { response ->
+                if (response.isSuccessful) { // 200번대 성공
+                    _uiState.value = SignUpUiState.Success
+                } else {
+                    _uiState.value = SignUpUiState.Error(response.getErrorMsg())
+                }
+            }.onFailure { e ->
+                _uiState.value = SignUpUiState.Failure(R.string.network_error)
             }
         }
     }
 
-    fun clearErrorMessage() {
-        state = state.copy(errorMessageRes = null)
+    fun resetUiState() {
+        _uiState.value = SignUpUiState.Idle
     }
 }

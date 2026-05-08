@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
-import com.example.letssopt.core.data.DataStore
+import com.example.letssopt.core.data.local.DataStore
 import com.example.letssopt.core.designsystem.component.LabeledTextField
 import com.example.letssopt.core.designsystem.component.PrimaryButton
 import com.example.letssopt.core.designsystem.theme.Background
