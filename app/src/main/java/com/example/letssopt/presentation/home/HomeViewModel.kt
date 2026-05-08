@@ -1,5 +1,6 @@
 package com.example.letssopt.presentation.home
 
+import androidx.compose.runtime.external.kotlinx.collections.immutable.ImmutableList
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,9 +9,9 @@ import com.example.letssopt.R
 import com.example.letssopt.presentation.home.model.ContentItem
 
 data class HomeState(
-    val newContents: List<ContentItem> = emptyList(),
-    val watGorithmContents: List<ContentItem> = emptyList(),
-    val watchaPartyContents: List<ContentItem> = emptyList()
+    val newContents: ImmutableList<ContentItem> = emptyList(),
+    val watGorithmContents: ImmutableList<ContentItem> = emptyList(),
+    val watchaPartyContents: ImmutableList<ContentItem> = emptyList()
 )
 
 class HomeViewModel : ViewModel() {
@@ -22,13 +23,13 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun loadHomeContents() {
-        state = HomeState(
-            newContents = listOf(
+        state = state.copy(
+            newContents = persistentListOf(
                 ContentItem(1, null, null, R.drawable.new_1),
                 ContentItem(2, null, null, R.drawable.new_2),
                 ContentItem(3, null, null, R.drawable.new_3),
             ),
-            watGorithmContents = listOf(
+            watGorithmContents = persistentListOf(
                 ContentItem(4, null, null, R.drawable.content_1),
                 ContentItem(5, null, null, R.drawable.content_2),
                 ContentItem(6, null, null, R.drawable.content_3),
@@ -36,7 +37,7 @@ class HomeViewModel : ViewModel() {
                 ContentItem(8, null, null, R.drawable.content_2),
                 ContentItem(9, null, null, R.drawable.content_3),
             ),
-            watchaPartyContents = listOf(
+            watchaPartyContents = persistentListOf(
                 ContentItem(10, "왕과 사는 남자", "21:30", R.drawable.party_1),
                 ContentItem(11, "파묘", "22:22", R.drawable.party_2),
             )

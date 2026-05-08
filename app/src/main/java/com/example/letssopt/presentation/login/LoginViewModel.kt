@@ -5,11 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
-data class LoginState(
-    val isLoginSuccess: Boolean = false,
-    val errorMessage: String? = null
-)
-
 class LoginViewModel : ViewModel() {
     var email by mutableStateOf("")
         private set
