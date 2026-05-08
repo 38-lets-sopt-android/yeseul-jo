@@ -1,29 +1,29 @@
 package com.example.letssopt.presentation.home
 
-import androidx.compose.runtime.external.kotlinx.collections.immutable.ImmutableList
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.letssopt.R
 import com.example.letssopt.presentation.home.model.ContentItem
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 data class HomeState(
-    val newContents: ImmutableList<ContentItem> = emptyList(),
-    val watGorithmContents: ImmutableList<ContentItem> = emptyList(),
-    val watchaPartyContents: ImmutableList<ContentItem> = emptyList()
+    val newContents: ImmutableList<ContentItem> = persistentListOf(),
+    val watGorithmContents: ImmutableList<ContentItem> = persistentListOf(),
+    val watchaPartyContents: ImmutableList<ContentItem> = persistentListOf()
 )
 
 class HomeViewModel : ViewModel() {
-    var state by mutableStateOf(HomeState())
-        private set
+    private val _state = MutableStateFlow(HomeState())
+    val state = _state.asStateFlow()
 
     init {
         loadHomeContents()
     }
 
     private fun loadHomeContents() {
-        state = state.copy(
+        _state.value = _state.value.copy(
             newContents = persistentListOf(
                 ContentItem(1, null, null, R.drawable.new_1),
                 ContentItem(2, null, null, R.drawable.new_2),
