@@ -45,6 +45,7 @@ fun BottomNavigationBar(navController: NavController) {
             // 현재 경로와 비교
             val isSelected = currentDestination?.hasRoute(item.route::class) ?: false
             val tabLabel = stringResource(id = item.title)
+            val tintColor = if (isSelected) Color.White else Disabled
 
             NavigationBarItem(
                 selected = isSelected,
@@ -62,13 +63,13 @@ fun BottomNavigationBar(navController: NavController) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = item.icon),
                         contentDescription = null,
-                        tint = if (isSelected) Color.White else Disabled
+                        tint = tintColor
                     )
                 },
                 label = {
                     Text(
                         text = tabLabel,
-                        color = if (isSelected) Color.White else Disabled
+                        color = tintColor
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
