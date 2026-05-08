@@ -32,9 +32,10 @@ class MainActivity : ComponentActivity() {
                     color = colorScheme.background
                 ) {
                     val context = LocalContext.current
+                    val dataStore = remember { DataStore(context) }
                     // 화면 이동 컨트롤러
                     val navController = rememberNavController()
-                    val isAutoLogin = remember { DataStore.getAutoLogin(context) }
+                    val isAutoLogin = remember { dataStore.getAutoLogin() }
                     NavHost(
                         navController = navController,
                         // 자동로그인 여부에 따라 시작 화면 결정
@@ -46,7 +47,7 @@ class MainActivity : ComponentActivity() {
                                 LoginScreen(
                                     onSignupClick = { navController.navigate(Route.SIGNUP) },
                                     onLoginSuccess = {
-                                        DataStore.setAutoLogin(context, true)
+                                        dataStore.setAutoLogin(true)
                                         navController.navigate(Route.MainGraph) {
                                             popUpTo<Route.LOGIN> { inclusive = true }
                                         }
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                             composable<Route.SIGNUP> {
                                 SignupScreen(
                                     onSignupSuccess = { email, password ->
-                                        DataStore.saveUser(context, email, password)
+                                        dataStore.saveUser(email, password)
                                         navController.popBackStack()
                                         Toast.makeText(context, "회원가입 성공!", Toast.LENGTH_SHORT)
                                             .show()

@@ -88,16 +88,16 @@ private fun TextFieldPreview() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             LabeledTextField(
-                label = stringResource(R.string.email),
+                label = stringResource(R.string.login_id),
                 value = "",
                 onValueChange = {},
-                placeholder = stringResource(R.string.email_placeholder)
+                placeholder = stringResource(R.string.login_id_placeholder)
             )
             LabeledTextField(
-                label = stringResource(R.string.email),
+                label = stringResource(R.string.login_password),
                 value = "sopt@sopt.org",
                 onValueChange = {},
-                placeholder = stringResource(R.string.email_placeholder)
+                placeholder = stringResource(R.string.login_password_placeholder)
             )
         }
     }

@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -79,31 +82,62 @@ fun SignupScreen(
 
         // input form
         Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
             LabeledTextField(
-                label = stringResource(R.string.email),
-                value = viewModel.email,
-                onValueChange = { viewModel.updateEmail(it) },
-                placeholder = stringResource(R.string.email_placeholder)
+                label = stringResource(R.string.login_id),
+                value = viewModel.id,
+                onValueChange = { viewModel.updateId(it) },
+                placeholder = stringResource(R.string.login_id_placeholder)
             )
             LabeledTextField(
-                label = stringResource(R.string.password),
+                label = stringResource(R.string.login_password),
                 value = viewModel.password,
                 onValueChange = { viewModel.updatePassword(it) },
-                placeholder = stringResource(R.string.password_placeholder),
+                placeholder = stringResource(R.string.login_password_placeholder),
                 isPassword = true
             )
             LabeledTextField(
-                label = stringResource(R.string.password_confirm),
+                label = stringResource(R.string.signup_password_confirm),
                 value = viewModel.passwordConfirm,
                 onValueChange = { viewModel.updatePasswordConfirm(it) },
-                placeholder = stringResource(R.string.password_confirm_placeholder),
+                placeholder = stringResource(R.string.signup_password_confirm_placeholder),
                 isPassword = true
             )
+            LabeledTextField(
+                label = stringResource(R.string.signup_name),
+                value = viewModel.name,
+                onValueChange = { viewModel.updateName(it) },
+                placeholder = stringResource(R.string.signup_name_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_email),
+                value = viewModel.email,
+                onValueChange = { viewModel.updateEmail(it) },
+                placeholder = stringResource(R.string.signup_email_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_age),
+                value = viewModel.age,
+                onValueChange = { viewModel.updateAge(it) },
+                placeholder = stringResource(R.string.signup_age_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_part),
+                value = viewModel.part,
+                onValueChange = { viewModel.updatePart(it) },
+                placeholder = stringResource(R.string.signup_part_placeholder)
+            )
+
+            Spacer(modifier = Modifier.height(28.dp))
+
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(20.dp))
 
         // bottom
         PrimaryButton(

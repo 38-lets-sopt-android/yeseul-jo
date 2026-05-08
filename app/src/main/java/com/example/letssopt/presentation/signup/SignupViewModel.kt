@@ -13,17 +13,29 @@ data class SignupState(
 )
 
 class SignupViewModel : ViewModel() {
-    var email by mutableStateOf("")
+    var id by mutableStateOf("")
         private set
     var password by mutableStateOf("")
         private set
     var passwordConfirm by mutableStateOf("")
         private set
 
+    var name by mutableStateOf("")
+        private set
+
+    var email by mutableStateOf("")
+        private set
+
+    var age by mutableStateOf("")
+        private set
+
+    var part by mutableStateOf("")
+        private set
+
     var state by mutableStateOf(SignupState())
 
-    fun updateEmail(newEmail: String) {
-        email = newEmail
+    fun updateId(newId: String) {
+        id = newId
     }
 
     fun updatePassword(newPassword: String) {
@@ -32,6 +44,22 @@ class SignupViewModel : ViewModel() {
 
     fun updatePasswordConfirm(newPasswordConfirm: String) {
         passwordConfirm = newPasswordConfirm
+    }
+
+    fun updateName(newName: String) {
+        name = newName
+    }
+
+    fun updateEmail(newEmail: String) {
+        email = newEmail
+    }
+
+    fun updateAge(newAge: String) {
+        age = newAge
+    }
+
+    fun updatePart(newPart: String) {
+        part = newPart
     }
 
     private val isEmailValid get() = Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()

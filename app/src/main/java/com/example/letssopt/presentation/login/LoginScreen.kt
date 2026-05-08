@@ -40,6 +40,7 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state
+    val dataStore = DataStore(context)
 
     LaunchedEffect(state) {
         if (state.isLoginSuccess) {
@@ -84,17 +85,17 @@ fun LoginScreen(
 
         // input form
         LabeledTextField(
-            label = stringResource(R.string.email),
+            label = stringResource(R.string.login_id),
             value = viewModel.email,
             onValueChange = { viewModel.updateEmail(it) },
-            placeholder = stringResource(R.string.email_placeholder)
+            placeholder = stringResource(R.string.login_id_placeholder)
         )
         Spacer(modifier = Modifier.height(18.dp))
         LabeledTextField(
-            label = stringResource(R.string.password),
+            label = stringResource(R.string.login_password),
             value = viewModel.password,
             onValueChange = { viewModel.updatePassword(it) },
-            placeholder = stringResource(R.string.password_placeholder),
+            placeholder = stringResource(R.string.login_password_placeholder),
             isPassword = true
         )
 
@@ -111,8 +112,8 @@ fun LoginScreen(
         PrimaryButton(
             text = stringResource(R.string.login),
             onClick = {
-                val savedEmail = DataStore.getSavedEmail(context)
-                val savedPassword = DataStore.getSavedPassword(context)
+                val savedEmail = dataStore.getSavedEmail()
+                val savedPassword = dataStore.getSavedPassword()
                 viewModel.login(savedEmail, savedPassword)
             },
             enabled = viewModel.isLoginEnabled
