@@ -14,15 +14,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
-import com.example.letssopt.core.data.local.DataStore
 import com.example.letssopt.core.designsystem.component.LabeledTextField
 import com.example.letssopt.core.designsystem.component.PrimaryButton
 import com.example.letssopt.core.designsystem.theme.Background
@@ -34,22 +35,30 @@ import com.example.letssopt.core.designsystem.theme.TextSecondary
 @Composable
 fun LoginScreen(
     onSignupClick: () -> Unit, // 회원가입 버튼 클릭 시
-    onLoginSuccess: () -> Unit, // 로그인 성공 시
+    onLoginSuccess: (Int) -> Unit, // 로그인 성공 시
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = viewModel(),
 ) {
     val context = LocalContext.current
-    val state = viewModel.state
-    val dataStore = DataStore(context)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state) {
-        if (state.isLoginSuccess) {
-            onLoginSuccess()
-            Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
-        }
-        state.errorMessage?.let { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            viewModel.clearErrorMessage()
+    LaunchedEffect(uiState) {
+        when (val currentState = uiState) {
+            is LoginUiState.Success -> {
+                Toast.makeText(context, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                onLoginSuccess(currentState.userId)
+            }
+
+            is LoginUiState.Error -> {
+                Toast.makeText(context, currentState.message, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+
+            is LoginUiState.Failure -> {
+                Toast.makeText(context, currentState.messageRes, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+            else -> Unit
         }
     }
 
@@ -86,8 +95,8 @@ fun LoginScreen(
         // input form
         LabeledTextField(
             label = stringResource(R.string.login_id),
-            value = viewModel.email,
-            onValueChange = { viewModel.updateEmail(it) },
+            value = viewModel.id,
+            onValueChange = { viewModel.updateId(it) },
             placeholder = stringResource(R.string.login_id_placeholder)
         )
         Spacer(modifier = Modifier.height(18.dp))
@@ -112,9 +121,7 @@ fun LoginScreen(
         PrimaryButton(
             text = stringResource(R.string.login),
             onClick = {
-                val savedEmail = dataStore.getSavedEmail()
-                val savedPassword = dataStore.getSavedPassword()
-                viewModel.login(savedEmail, savedPassword)
+                viewModel.login()
             },
             enabled = viewModel.isLoginEnabled
         )

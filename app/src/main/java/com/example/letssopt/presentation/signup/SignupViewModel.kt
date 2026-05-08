@@ -103,7 +103,7 @@ class SignupViewModel : ViewModel() {
                     )
                 )
             }.onSuccess { response ->
-                if (response.isSuccessful) { // 200번대 성공
+                if (response.isSuccessful) {
                     _uiState.value = SignUpUiState.Success
                 } else {
                     _uiState.value = SignUpUiState.Error(response.getErrorMsg())
