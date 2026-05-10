@@ -26,6 +26,7 @@ import com.example.letssopt.presentation.home.component.WatchaPartyCard
 
 @Composable
 fun HomeScreen(
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel()
 ) {
@@ -34,7 +35,7 @@ fun HomeScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            HomeTopAppBar()
+            HomeTopAppBar(onProfileClick = onProfileClick)
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { innerPadding ->
@@ -97,6 +98,6 @@ fun HomeScreen(
 @Composable
 private fun HomePreview() {
     LETSSOPTTheme {
-        HomeScreen()
+        HomeScreen(onProfileClick = {})
     }
 }

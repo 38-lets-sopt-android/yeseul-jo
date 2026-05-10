@@ -26,7 +26,9 @@ import com.example.letssopt.core.designsystem.theme.PrimaryRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopAppBar() {
+fun HomeTopAppBar(
+    onProfileClick: () -> Unit
+) {
     TopAppBar(
         title = {
             Text(
@@ -66,7 +68,7 @@ fun HomeTopAppBar() {
                     )
                 }
                 IconButton(
-                    onClick = {},
+                    onClick = onProfileClick,
                     modifier = Modifier.size(24.dp)
                 ) {
                     Icon(

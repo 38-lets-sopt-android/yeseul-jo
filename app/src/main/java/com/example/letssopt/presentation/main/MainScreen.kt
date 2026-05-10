@@ -12,6 +12,7 @@ import com.example.letssopt.core.navigation.Route
 import com.example.letssopt.presentation.home.HomeScreen
 import com.example.letssopt.presentation.home.component.BottomNavigationBar
 import com.example.letssopt.presentation.library.LibraryScreen
+import com.example.letssopt.presentation.profile.ProfileScreen
 import com.example.letssopt.presentation.search.SearchScreen
 import com.example.letssopt.presentation.store.StoreScreen
 import com.example.letssopt.presentation.webtoon.WebtoonScreen
@@ -29,7 +30,14 @@ fun MainScreen() {
             startDestination = Route.HOME,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<Route.HOME> { HomeScreen() }
+            composable<Route.HOME> {
+                HomeScreen(
+                    onProfileClick = { mainNavController.navigate(Route.PROFILE) }
+                )
+            }
+            composable<Route.PROFILE> {
+                ProfileScreen()
+            }
             composable<Route.STORE> { StoreScreen() }
             composable<Route.WEBTOON> { WebtoonScreen() }
             composable<Route.SEARCH> { SearchScreen() }

@@ -27,4 +27,8 @@ sealed interface Route {
     data object SEARCH : Route
     @Serializable
     data object LIBRARY : Route
+
+    // Top App Bar
+    @Serializable
+    data object PROFILE : Route
 }
