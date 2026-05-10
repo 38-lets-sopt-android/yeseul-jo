@@ -5,20 +5,25 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.letssopt.R
 import com.example.letssopt.core.designsystem.component.LabeledTextField
@@ -35,15 +40,23 @@ fun SignupScreen(
     viewModel: SignupViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val state = viewModel.state
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state) {
-        if (state.isSignupSuccess) {
-            onSignupSuccess(viewModel.email, viewModel.password)
-        }
-        state.errorMessageRes?.let { resId ->
-            Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
-            viewModel.clearErrorMessage()
+    LaunchedEffect(uiState) {
+        when (uiState) {
+            is SignUpUiState.Success -> {
+                onSignupSuccess(viewModel.email, viewModel.password)
+            }
+            is SignUpUiState.Error -> {
+                Toast.makeText(context, (uiState as SignUpUiState.Error).message, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+            is SignUpUiState.Failure -> {
+                val resId = (uiState as SignUpUiState.Failure).messageRes
+                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+                viewModel.resetUiState()
+            }
+            else -> Unit
         }
     }
 
@@ -79,31 +92,62 @@ fun SignupScreen(
 
         // input form
         Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
             LabeledTextField(
-                label = stringResource(R.string.email),
-                value = viewModel.email,
-                onValueChange = { viewModel.updateEmail(it) },
-                placeholder = stringResource(R.string.email_placeholder)
+                label = stringResource(R.string.login_id),
+                value = viewModel.id,
+                onValueChange = { viewModel.updateId(it) },
+                placeholder = stringResource(R.string.login_id_placeholder)
             )
             LabeledTextField(
-                label = stringResource(R.string.password),
+                label = stringResource(R.string.login_password),
                 value = viewModel.password,
                 onValueChange = { viewModel.updatePassword(it) },
-                placeholder = stringResource(R.string.password_placeholder),
+                placeholder = stringResource(R.string.login_password_placeholder),
                 isPassword = true
             )
             LabeledTextField(
-                label = stringResource(R.string.password_confirm),
+                label = stringResource(R.string.signup_password_confirm),
                 value = viewModel.passwordConfirm,
                 onValueChange = { viewModel.updatePasswordConfirm(it) },
-                placeholder = stringResource(R.string.password_confirm_placeholder),
+                placeholder = stringResource(R.string.signup_password_confirm_placeholder),
                 isPassword = true
             )
+            LabeledTextField(
+                label = stringResource(R.string.signup_name),
+                value = viewModel.name,
+                onValueChange = { viewModel.updateName(it) },
+                placeholder = stringResource(R.string.signup_name_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_email),
+                value = viewModel.email,
+                onValueChange = { viewModel.updateEmail(it) },
+                placeholder = stringResource(R.string.signup_email_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_age),
+                value = viewModel.age,
+                onValueChange = { viewModel.updateAge(it) },
+                placeholder = stringResource(R.string.signup_age_placeholder)
+            )
+            LabeledTextField(
+                label = stringResource(R.string.signup_part),
+                value = viewModel.part,
+                onValueChange = { viewModel.updatePart(it) },
+                placeholder = stringResource(R.string.signup_part_placeholder)
+            )
+
+            Spacer(modifier = Modifier.height(28.dp))
+
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(20.dp))
 
         // bottom
         PrimaryButton(

@@ -1,4 +1,4 @@
-package com.example.letssopt.core.data
+package com.example.letssopt.core.data.local
 
 import android.content.Context
 import androidx.core.content.edit
@@ -11,6 +11,7 @@ class DataStore(context: Context) {
         private const val KEY_IS_LOGIN = "is_login"
         private const val KEY_SAVED_EMAIL = "saved_email"
         private const val KEY_SAVED_PASSWORD = "saved_password"
+        private const val KEY_USER_ID = "user_id"
     }
 
     fun setAutoLogin(isLogin: Boolean) {
@@ -33,4 +34,12 @@ class DataStore(context: Context) {
 
     fun getSavedPassword(): String =
         prefs.getString(KEY_SAVED_PASSWORD, "") ?: ""
+
+    fun setUserId(userId: Int) {
+        prefs.edit { putInt(KEY_USER_ID, userId) }
+    }
+
+    fun getUserId(): Int {
+        return prefs.getInt(KEY_USER_ID, -1)
+    }
 }

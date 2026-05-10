@@ -1,10 +1,10 @@
-package com.example.letssopt.core.data.dao
+package com.example.letssopt.core.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.letssopt.core.data.entity.Content
+import com.example.letssopt.core.data.local.entity.Content
 import kotlinx.coroutines.flow.Flow
 
 @Dao

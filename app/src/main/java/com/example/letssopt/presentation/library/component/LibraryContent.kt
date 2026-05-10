@@ -24,7 +24,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.letssopt.R
-import com.example.letssopt.core.data.entity.Content
+import com.example.letssopt.core.data.local.entity.Content
 
 @Composable
 fun LibraryContent(

@@ -8,16 +8,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.letssopt.core.navigation.Route
 import com.example.letssopt.presentation.home.HomeScreen
 import com.example.letssopt.presentation.home.component.BottomNavigationBar
 import com.example.letssopt.presentation.library.LibraryScreen
+import com.example.letssopt.presentation.profile.ProfileScreen
 import com.example.letssopt.presentation.search.SearchScreen
 import com.example.letssopt.presentation.store.StoreScreen
 import com.example.letssopt.presentation.webtoon.WebtoonScreen
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userId: Int) {
     val mainNavController = rememberNavController()
 
     Scaffold(
@@ -29,7 +31,15 @@ fun MainScreen() {
             startDestination = Route.HOME,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable<Route.HOME> { HomeScreen() }
+            composable<Route.HOME> {
+                HomeScreen(
+                    onProfileClick = { mainNavController.navigate(Route.PROFILE(userId = userId)) }
+                )
+            }
+            composable<Route.PROFILE> { backStackEntry ->
+                val profileRoute: Route.PROFILE = backStackEntry.toRoute()
+                ProfileScreen(userId = profileRoute.userId)
+            }
             composable<Route.STORE> { StoreScreen() }
             composable<Route.WEBTOON> { WebtoonScreen() }
             composable<Route.SEARCH> { SearchScreen() }

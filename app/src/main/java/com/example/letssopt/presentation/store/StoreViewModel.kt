@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.letssopt.R
-import com.example.letssopt.core.data.dao.ContentDao
-import com.example.letssopt.core.data.dao.LibraryDao
-import com.example.letssopt.core.data.entity.Content
-import com.example.letssopt.core.data.entity.Library
+import com.example.letssopt.core.data.local.dao.ContentDao
+import com.example.letssopt.core.data.local.dao.LibraryDao
+import com.example.letssopt.core.data.local.entity.Content
+import com.example.letssopt.core.data.local.entity.Library
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
