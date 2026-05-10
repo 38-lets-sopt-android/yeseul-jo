@@ -8,7 +8,7 @@ sealed interface Route {
     @Serializable
     data object AuthGraph : Route
     @Serializable
-    data object MainGraph : Route
+    data class MainGraph(val userId: Int) : Route
 
     // Auth
     @Serializable
@@ -30,5 +30,5 @@ sealed interface Route {
 
     // Top App Bar
     @Serializable
-    data object PROFILE : Route
+    data class PROFILE(val userId: Int) : Route
 }

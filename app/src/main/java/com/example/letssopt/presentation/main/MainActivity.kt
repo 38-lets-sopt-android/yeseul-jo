@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.letssopt.core.data.local.DataStore
 import com.example.letssopt.core.designsystem.theme.LETSSOPTTheme
 import com.example.letssopt.core.navigation.Route
@@ -36,19 +37,26 @@ class MainActivity : ComponentActivity() {
                     // 화면 이동 컨트롤러
                     val navController = rememberNavController()
                     val isAutoLogin = remember { dataStore.getAutoLogin() }
+                    val savedUserId = remember { dataStore.getUserId() }
+
                     NavHost(
                         navController = navController,
                         // 자동로그인 여부에 따라 시작 화면 결정
-                        startDestination = if (isAutoLogin) Route.MainGraph else Route.AuthGraph,
+                        startDestination = if (isAutoLogin && savedUserId != -1) {
+                            Route.MainGraph(
+                                userId = savedUserId
+                            )
+                        } else Route.AuthGraph,
 
                         ) {
                         navigation<Route.AuthGraph>(startDestination = Route.LOGIN) {
                             composable<Route.LOGIN> {
                                 LoginScreen(
                                     onSignupClick = { navController.navigate(Route.SIGNUP) },
-                                    onLoginSuccess = {
+                                    onLoginSuccess = { userId ->
+                                        dataStore.setUserId(userId)
                                         dataStore.setAutoLogin(true)
-                                        navController.navigate(Route.MainGraph) {
+                                        navController.navigate(Route.MainGraph(userId = userId)) {
                                             popUpTo<Route.LOGIN> { inclusive = true }
                                         }
                                     }
@@ -65,8 +73,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        composable<Route.MainGraph> {
-                            MainScreen()
+                        composable<Route.MainGraph> { backStackEntry ->
+                            val mainRoute: Route.MainGraph = backStackEntry.toRoute()
+                            MainScreen(userId = mainRoute.userId)
                         }
                     }
                 }
